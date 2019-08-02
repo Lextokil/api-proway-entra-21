@@ -47,6 +47,5 @@ public class ConexaoMysqlJDBC implements ConexaoJDBC {
             }
         }
     }
-	}
 
 }
