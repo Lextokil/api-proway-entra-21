@@ -9,6 +9,7 @@ import javax.ws.rs.core.MediaType;
 
 @Path("hello")
 public class HelloController {
+	
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
 	public String getMensagem(@QueryParam("usuario") String usuario) {

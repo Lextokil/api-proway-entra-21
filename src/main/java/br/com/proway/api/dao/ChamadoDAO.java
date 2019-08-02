@@ -9,6 +9,7 @@ import java.util.List;
 import br.com.proway.api.data.ConexaoJDBC;
 import br.com.proway.api.data.ConexaoMysqlJDBC;
 import br.com.proway.api.model.Chamado;
+import br.com.proway.api.model.util.Status;
 
 
 public class ChamadoDAO {
