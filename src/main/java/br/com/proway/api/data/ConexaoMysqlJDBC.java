@@ -1,6 +1,7 @@
 package br.com.proway.api.data;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -9,8 +10,18 @@ public class ConexaoMysqlJDBC implements ConexaoJDBC {
 
 	private Connection connection = null;
 
-	public ConexaoMysqlJDBC() {
+	private static final String USERNAME = "root";
 
+	// Senha do mysql
+	private static final String PASSWORD = "123456";
+
+	// Dados de caminho, porta e nome da base de dados que irá ser feita a conexão
+	private static final String DATABASE_URL = "jdbc:mysql:127.0.0.1:3306/exemplo_jdbc";
+
+	public ConexaoMysqlJDBC() throws SQLException, ClassNotFoundException {
+		Class.forName("org.postgresql.Driver");
+		this.connection = DriverManager.getConnection(DATABASE_URL, USERNAME, PASSWORD);
+		this.connection.setAutoCommit(false);
 	}
 
 	@Override
@@ -31,21 +42,21 @@ public class ConexaoMysqlJDBC implements ConexaoJDBC {
 
 	@Override
 	public void commit() throws SQLException {
-        this.connection.commit();
-        this.close();
+		this.connection.commit();
+		this.close();
 	}
 
 	@Override
 	public void rollback() {
-        if (this.connection != null) {
-            try {
-                this.connection.rollback();
-            } catch (SQLException ex) {
-                Logger.getLogger(ConexaoMysqlJDBC.class.getName()).log(Level.SEVERE, null, ex);
-            } finally {
-                this.close();
-            }
-        }
-    }
+		if (this.connection != null) {
+			try {
+				this.connection.rollback();
+			} catch (SQLException ex) {
+				Logger.getLogger(ConexaoMysqlJDBC.class.getName()).log(Level.SEVERE, null, ex);
+			} finally {
+				this.close();
+			}
+		}
+	}
 
 }
