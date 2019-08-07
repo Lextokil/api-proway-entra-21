@@ -5,6 +5,8 @@
 *.settings/
 /bin
 
+#intellij
+*.idea/
 
 # Log file
 *.log

@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="api-proway-entra-21">
+    <output-path>$PROJECT_DIR$/out/artifacts/api_proway_entra_21</output-path>
+    <root id="archive" name="api-proway-entra-21.war" />
+  </artifact>
+</component>
