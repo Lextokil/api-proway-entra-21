@@ -19,7 +19,7 @@ public class ConexaoMysqlJDBC implements ConexaoJDBC {
 	private static final String DATABASE_URL = "jdbc:mysql:127.0.0.1:3306/exemplo_jdbc";
 
 	public ConexaoMysqlJDBC() throws SQLException, ClassNotFoundException {
-		Class.forName("org.postgresql.Driver");
+		Class.forName("com.mysql.jdbc.Driver");
 		this.connection = DriverManager.getConnection(DATABASE_URL, USERNAME, PASSWORD);
 		this.connection.setAutoCommit(false);
 	}
