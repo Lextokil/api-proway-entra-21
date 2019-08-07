@@ -16,12 +16,25 @@ public class ConexaoMysqlJDBC implements ConexaoJDBC {
 	private static final String PASSWORD = "123456";
 
 	// Dados de caminho, porta e nome da base de dados que irá ser feita a conexão
-	private static final String DATABASE_URL = "jdbc:mysql:127.0.0.1:3306/exemplo_jdbc";
+	private static final String DATABASE_URL = "jdbc:mysql://0.0.0.0:3306/exemplo_jdbc";
 
 	public ConexaoMysqlJDBC() throws SQLException, ClassNotFoundException {
-		Class.forName("com.mysql.jdbc.Driver");
+		Class.forName("com.mysql.jdbc.Driver"); 
 		this.connection = DriverManager.getConnection(DATABASE_URL, USERNAME, PASSWORD);
 		this.connection.setAutoCommit(false);
+		
+		//Testa sua conexão//  
+		 
+        if (connection != null) {
+ 
+            System.out.println("Conectou");
+ 
+        } else {
+ 
+        	System.out.println("STATUS--->Não foi possivel realizar conexão");
+ 
+        }
+		
 	}
 
 	@Override
