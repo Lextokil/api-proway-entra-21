@@ -29,7 +29,8 @@ public class ChamadoDAO {
 			stmt.setString(1, chamado.getAssunto());
 			stmt.setString(2, chamado.getStatus().toString());
 			stmt.setString(3, chamado.getMensagem());
-
+			stmt.execute();
+			
 			this.conexao.commit();
 		} catch (SQLException e) {
 			this.conexao.rollback();
