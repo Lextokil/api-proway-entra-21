@@ -55,8 +55,18 @@ public class ChamadoController {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/")
 	public Response create(Chamado chamado) {
-		System.out.println(chamado.toString());
-		return Response.status(Response.Status.OK).build();
+
+		try {
+			chamado.setStatus(Status.NOVO);
+			ChamadoDAO chamadoDAO = new ChamadoDAO();
+			chamadoDAO.inserir(chamado);
+
+			return Response.status(Response.Status.OK).build();
+		} catch (SQLException | ClassNotFoundException ex) {
+			Logger.getLogger(ChamadoController.class.getName()).log(Level.SEVERE, null, ex);
+			throw new WebApplicationException(Response.Status.INTERNAL_SERVER_ERROR);
+		}
+
 	}
 
 	@PUT

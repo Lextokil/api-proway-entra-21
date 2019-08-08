@@ -22,18 +22,13 @@ public class ChamadoDAO {
 
 	public Long inserir(Chamado chamado) throws SQLException, ClassNotFoundException {
 		Long id = null;
-		String sqlQuery = "INSERT INTO chamado (assunto, status, mensagem) VALUES (?, ?, ?) RETURNING id";
+		String sqlQuery = "INSERT INTO chamado (assunto, status, mensagem) VALUES (?, ?, ?) ";
 
 		try {
 			PreparedStatement stmt = this.conexao.getConnection().prepareStatement(sqlQuery);
 			stmt.setString(1, chamado.getAssunto());
 			stmt.setString(2, chamado.getStatus().toString());
 			stmt.setString(3, chamado.getMensagem());
-
-			ResultSet rs = stmt.executeQuery();
-			if (rs.next()) {
-				id = rs.getLong("id");
-			}
 
 			this.conexao.commit();
 		} catch (SQLException e) {

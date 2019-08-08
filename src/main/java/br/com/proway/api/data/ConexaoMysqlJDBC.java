@@ -21,20 +21,7 @@ public class ConexaoMysqlJDBC implements ConexaoJDBC {
 	public ConexaoMysqlJDBC() throws SQLException, ClassNotFoundException {
 		Class.forName("com.mysql.jdbc.Driver"); 
 		this.connection = DriverManager.getConnection(DATABASE_URL, USERNAME, PASSWORD);
-		this.connection.setAutoCommit(false);
-		
-		//Testa sua conexão//  
-		 
-        if (connection != null) {
- 
-            System.out.println("Conectou");
- 
-        } else {
- 
-        	System.out.println("STATUS--->Não foi possivel realizar conexão");
- 
-        }
-		
+		this.connection.setAutoCommit(false);		
 	}
 
 	@Override
