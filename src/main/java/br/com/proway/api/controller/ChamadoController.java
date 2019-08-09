@@ -1,6 +1,5 @@
 package br.com.proway.api.controller;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,10 +28,9 @@ public class ChamadoController {
 	@Path("/")
 	public List<Chamado> listChamados() {
 		try {
-			ChamadoDAO chamadoDAO = new ChamadoDAO();
-			return chamadoDAO.listar();
-
-		} catch (SQLException | ClassNotFoundException ex) {
+			ChamadoDAO ChamadoDAO = new ChamadoDAO();
+			return ChamadoDAO.listar();
+		} catch (Exception ex) {
 			Logger.getLogger(ChamadoController.class.getName()).log(Level.SEVERE, null, ex);
 			throw new WebApplicationException(Response.Status.INTERNAL_SERVER_ERROR);
 		}
@@ -42,45 +40,72 @@ public class ChamadoController {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("{id}/")
 	public Chamado getChamado(@PathParam("id") long id) {
-		Chamado c1 = new Chamado();
-		c1.setId(id);
-		c1.setAssunto("Assunto" + id);
-		c1.setMensagem("Mensagem" + id);
-		c1.setStatus(Status.NOVO);
-
-		return c1;
+		try {
+			ChamadoDAO ChamadoDAO = new ChamadoDAO();
+			return ChamadoDAO.selecionar(id);
+		} catch (Exception ex) {
+			Logger.getLogger(ChamadoController.class.getName()).log(Level.SEVERE, null, ex);
+			throw new WebApplicationException(Response.Status.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/")
 	public Response create(Chamado chamado) {
-
 		try {
-			chamado.setStatus(Status.NOVO);
-			ChamadoDAO chamadoDAO = new ChamadoDAO();
-			chamadoDAO.inserir(chamado);
-
+			ChamadoDAO ChamadoDAO = new ChamadoDAO();
+			ChamadoDAO.inserir(chamado);
 			return Response.status(Response.Status.OK).build();
-		} catch (SQLException | ClassNotFoundException ex) {
+		} catch (Exception ex) {
 			Logger.getLogger(ChamadoController.class.getName()).log(Level.SEVERE, null, ex);
 			throw new WebApplicationException(Response.Status.INTERNAL_SERVER_ERROR);
 		}
-
 	}
 
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/")
 	public Response update(Chamado chamado) {
-		System.out.println(chamado.toString());
-		return Response.status(Response.Status.OK).build();
+		try {
+			chamado.setStatus(Status.PENDENTE);
+
+			ChamadoDAO ChamadoDAO = new ChamadoDAO();
+			ChamadoDAO.alterar(chamado);
+			return Response.status(Response.Status.OK).build();
+		} catch (Exception ex) {
+			Logger.getLogger(ChamadoController.class.getName()).log(Level.SEVERE, null, ex);
+			throw new WebApplicationException(Response.Status.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	@DELETE
 	@Path("{id}/")
 	public Response delete(@PathParam("id") long id) {
-		System.out.println("Deletando ID: " + id);
-		return Response.status(Response.Status.OK).build();
+		try {
+			ChamadoDAO ChamadoDAO = new ChamadoDAO();
+			ChamadoDAO.excluir(id);
+			return Response.status(Response.Status.OK).build();
+		} catch (Exception ex) {
+			Logger.getLogger(ChamadoController.class.getName()).log(Level.SEVERE, null, ex);
+			throw new WebApplicationException(Response.Status.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@PUT
+	@Path("{id}/")
+	public Response concluir(@PathParam("id") long id) {
+		try {
+			ChamadoDAO ChamadoDAO = new ChamadoDAO();
+
+			Chamado c = ChamadoDAO.selecionar(id);
+			c.setStatus(Status.FECHADO);
+
+			ChamadoDAO.alterar(c);
+			return Response.status(Response.Status.OK).build();
+		} catch (Exception ex) {
+			Logger.getLogger(ChamadoController.class.getName()).log(Level.SEVERE, null, ex);
+			throw new WebApplicationException(Response.Status.INTERNAL_SERVER_ERROR);
+		}
 	}
 }
