@@ -54,10 +54,9 @@ public class ChamadoController {
 	@Path("/")
 	public Response create(Chamado chamado) {
 		try {
-			/*
-			 * ChamadoDAO ChamadoDAO = new ChamadoDAO(); ChamadoDAO.inserir(chamado);
-			 */
-			System.out.println("Chegou no backEnd " + chamado.getAssunto() + chamado.getMensagem() + chamado.getStatus());
+			ChamadoDAO ChamadoDAO = new ChamadoDAO();
+			ChamadoDAO.inserir(chamado);
+
 			return Response.status(Response.Status.CREATED).build();
 		} catch (Exception ex) {
 			Logger.getLogger(ChamadoController.class.getName()).log(Level.SEVERE, null, ex);

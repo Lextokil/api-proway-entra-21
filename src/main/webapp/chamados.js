@@ -1,7 +1,7 @@
 $(function() {
 	$(".js-load-chamados").on('click', function() {
 		$.ajax({
-				url: "http://localhost:8080/api_proway/chamados/",
+				url: "http://localhost:8080/api_proway/rest/chamados/",
 				type: "GET",
 				success: function(response) {
 					desenhaTabela(response);
@@ -35,7 +35,7 @@ $(function() {
 				headers: { 
 					contentType: 'application/json'				
 				},
-				methodo: 'POST',
+				type: 'POST',
 				data:chamadoObj,
 				contentType: 'application/json; charset=utf-8',
 				success: function() {
