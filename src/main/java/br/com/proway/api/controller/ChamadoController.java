@@ -54,9 +54,11 @@ public class ChamadoController {
 	@Path("/")
 	public Response create(Chamado chamado) {
 		try {
-			ChamadoDAO ChamadoDAO = new ChamadoDAO();
-			ChamadoDAO.inserir(chamado);
-			return Response.status(Response.Status.OK).build();
+			/*
+			 * ChamadoDAO ChamadoDAO = new ChamadoDAO(); ChamadoDAO.inserir(chamado);
+			 */
+			System.out.println("Chegou no backEnd " + chamado.getAssunto() + chamado.getMensagem() + chamado.getStatus());
+			return Response.status(Response.Status.CREATED).build();
 		} catch (Exception ex) {
 			Logger.getLogger(ChamadoController.class.getName()).log(Level.SEVERE, null, ex);
 			throw new WebApplicationException(Response.Status.INTERNAL_SERVER_ERROR);
@@ -72,7 +74,7 @@ public class ChamadoController {
 
 			ChamadoDAO ChamadoDAO = new ChamadoDAO();
 			ChamadoDAO.alterar(chamado);
-			return Response.status(Response.Status.OK).build();
+			return Response.status(Response.Status.NO_CONTENT).build();
 		} catch (Exception ex) {
 			Logger.getLogger(ChamadoController.class.getName()).log(Level.SEVERE, null, ex);
 			throw new WebApplicationException(Response.Status.INTERNAL_SERVER_ERROR);
@@ -102,7 +104,7 @@ public class ChamadoController {
 			c.setStatus(Status.FECHADO);
 
 			ChamadoDAO.alterar(c);
-			return Response.status(Response.Status.OK).build();
+			return Response.status(Response.Status.ACCEPTED).build();
 		} catch (Exception ex) {
 			Logger.getLogger(ChamadoController.class.getName()).log(Level.SEVERE, null, ex);
 			throw new WebApplicationException(Response.Status.INTERNAL_SERVER_ERROR);
